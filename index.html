@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brayan Vera - Tatuador</title>
+  <style>
+    :root {
+      --gold: #d4af37;
+      --black: #0a0a0a;
+      --industrial-gray: #1f1f1f;
+      --dark-gray: #2b2b2b;
+      --light-gray: #b3b3b3;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Cinzel', serif;
+      background: var(--black);
+      color: var(--light-gray);
+      overflow-x: hidden;
+    }
+
+    header {
+      background: linear-gradient(90deg, var(--black), var(--industrial-gray));
+      padding: 20px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+
+    header h1 {
+      color: var(--gold);
+      font-size: 3rem;
+      letter-spacing: 4px;
+      text-align: center;
+    }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: url('TU_IMAGEN_HERO.jpg') center/cover no-repeat fixed;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+    }
+
+    .hero h2 {
+      position: relative;
+      color: var(--gold);
+      font-size: 3rem;
+      text-shadow: 0 0 15px rgba(212,175,55,0.4);
+      animation: fadeUp 2s ease-in-out;
+    }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(40px);} 
+      100% { opacity: 1; transform: translateY(0);} 
+    }
+
+    /* Enhanced Gallery */
+    .galeria {
+      padding: 120px 40px;
+      background: var(--industrial-gray);
+    }
+
+    .galeria h2 {
+      color: var(--gold);
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+    }
+
+    .grid-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+      transform: translateY(40px);
+      opacity: 0;
+      animation: fadeInCard 0.8s ease-out forwards;
+    }
+
+    @keyframes fadeInCard {
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .grid-item img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      transition: 0.5s;
+      filter: grayscale(50%) contrast(0.8);
+    }
+
+    .grid-item:hover img {
+      transform: scale(1.08);
+      filter: grayscale(0%);
+    }
+
+    .grid-item:hover::after {
+      opacity: 1;
+      transform: translateY(-6px);
+    }
+
+    .contacto {
+      padding: 100px 40px;
+      background: var(--black);
+      text-align: center;
+    }
+
+    .contacto h2 {
+      color: var(--gold);
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: var(--dark-gray);
+      color: var(--light-gray);
+      font-size: 0.9rem;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(12px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.3s;
+    }
+
+    .lightbox.hidden {
+      display: none;
+    }
+
+    .lightbox-content img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.8);
+    }
+  
+
+    /* Responsive Fixes */
+    @media (max-width: 768px) {
+      header {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      header h1 {
+        font-size: 2rem;
+        width: 100%;
+        text-align: center !important;
+        margin: 0 auto;
+      }
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .hero {
+        background-attachment: scroll;
+        padding-top: 40px;
+      }
+
+      .hero img {
+        width: 200px !important;
+      }
+
+      .hero h2 {
+        font-size: 2rem;
+        text-align: center;
+        padding: 0 20px;
+      }
+
+      .galeria {
+        padding: 80px 20px;
+      }
+
+      .grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 15px;
+      }
+
+      .grid-item img {
+        height: 220px;
+      }
+
+      .contacto p {
+        font-size: 1rem;
+      }
+    }
+
+    /* Extra Small Phones */
+    @media (max-width: 480px) {
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .grid-item img {
+        height: 180px;
+      }
+    }
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>BRAYAN VERA TATUADOR</h1>
+</header>
+
+<section class="hero" style="position:relative; height:100vh; overflow:hidden; display:flex; justify-content:center; align-items:center;">
+  <video autoplay muted loop playsinline src="VIDEO.mp4" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover;"></video>
+
+  <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.55); backdrop-filter:blur(3px);"></div>
+
+  <img src="logo-bv.png" alt="Logo BV" style="position:relative; width:280px; z-index:2; filter: drop-shadow(0 0 12px rgba(212,175,55,0.5));">
+</section>
+
+<section class="galeria" id="galeria">
+  <h2>Mi Galería</h2>
+  <div class="grid">
+    <div class="grid-item"><img src="2.jpeg"></div>
+    <div class="grid-item"><img src="3.jpeg"></div>
+    <div class="grid-item"><img src="4.jpeg"></div>
+    <div class="grid-item"><img src="5.jpeg"></div>
+    <div class="grid-item"><img src="6.jpeg"></div>
+    <div class="grid-item"><img src="7.jpeg"></div>
+    <div class="grid-item"><img src="8.jpeg"></div>
+    <div class="grid-item"><img src="9.jpeg"></div>
+    <div class="grid-item"><img src="10.jpeg"></div>
+    <div class="grid-item"><img src="11.jpeg"></div>
+    <div class="grid-item"><img src="12.jpeg"></div>
+    <div class="grid-item"><img src="13.jpeg"></div>
+    <div class="grid-item"><img src="14.jpeg"></div>
+    <div class="grid-item"><img src="15.jpeg"></div>
+    <div class="grid-item"><img src="16.jpeg"></div>
+    <div class="grid-item"><img src="17.jpeg"></div>
+    <div class="grid-item"><img src="19.jpeg"></div>
+    <div class="grid-item"><img src="20.jpeg"></div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <h2>Contacto</h2>
+  <p>WhatsApp: <a href="https://wa.link/oczbb2" target="_blank" style="color: var(--gold); text-decoration:none;">+1 (909) 638-5317</a></p>
+  <p>Instagram: <a href="https://www.instagram.com/brayanvera_tatuador/" target="_blank" style="color: var(--gold); text-decoration:none;">@brayanvera_tatuador</a></p>
+  <p>Dirección: 26030 Base Line St San Bernardino ZIP 92410</p>
+
+</section>
+
+<!-- Mapa de Google -->
+<section class="mapa" style="padding: 60px 20px; background: var(--industrial-gray); text-align:center;">
+  <h2 style="color: var(--gold); font-size:2.2rem; margin-bottom:25px;">Ubicación en Google Maps</h2>
+
+  <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3312.3158685049063!2d-117.245!3d34.120!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c3518d9a9c75e5%3A0x171b26b984d4e2b!2s26030%20Base%20Line%20St%2C%20San%20Bernardino%2C%20CA%2092410!5e0!3m2!1ses-419!2sus!4v1707080000000" 
+    width="100%" 
+    height="380" 
+    style="border:0; border-radius:14px; box-shadow:0 0 15px rgba(0,0,0,0.6);" 
+    allowfullscreen="" 
+    loading="lazy" 
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+
+  <p style="margin-top:15px; font-size:1.1rem; color:var(--light-gray);">
+    <a href="https://maps.app.goo.gl/jaNLUbDwXu3rpHhN7" target="_blank" style="color:var(--gold); text-decoration:none; font-weight:bold;">Abrir en Google Maps</a>
+  </p>
+</section>
+
+<footer>
+  © 2026 Brayan Vera - Todos los derechos reservados
+</footer>
+
+<div id="lightbox" class="lightbox hidden">
+  <div class="lightbox-content">
+    <img id="lightbox-img" src="" alt="Preview">
+  </div>
+</div>
+
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const images = document.querySelectorAll('.grid-item img');
+
+  images.forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightbox.classList.remove('hidden');
+    });
+  });
+
+  lightbox.addEventListener('click', (e) => {
+    if(e.target !== lightboxImg) {
+      lightbox.classList.add('hidden');
+    }
+  });
+
+  /* Fix for autoplay audio */
+  document.addEventListener('click', () => {
+    const audio = document.getElementById('bg-music');
+    if (audio) audio.play();
+  });
+</script>
+
+<audio id="bg-music" loop src="musica.mp3"></audio>
+</body>
+</html>
