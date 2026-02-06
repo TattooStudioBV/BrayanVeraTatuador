@@ -1,111 +1,120 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brayan Vera - Tatuador</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brayan Vera – Tatuador</title>
 
     <!-- FAVICON -->
-    <link rel="icon" type="image/png" href="ch.png">
+    <link rel="icon" type="image/png" href="ch.png" />
+
+    <!-- FUENTE -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         body {
             margin: 0;
-            background-color: #111;
+            background-color: #0d0d0d;
             color: #d4af37;
-            font-family: 'Cinzel', serif;
+            font-family: "Cinzel", serif;
             overflow-x: hidden;
         }
 
-        /* Header animado */
+        /* HEADER */
         header {
+            padding: 60px 20px;
+            background: #000;
             text-align: center;
-            padding: 80px 20px;
-            background: linear-gradient(180deg, #000, #1a1a1a);
-            animation: fadeDown 1.3s ease-out;
+            animation: fadeDown 1.4s ease;
         }
         @keyframes fadeDown {
-            from { opacity: 0; transform: translateY(-40px); }
+            from { opacity: 0; transform: translateY(-30px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
         h1, h2 {
-            font-family: 'Cinzel', serif;
             text-align: center;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
         }
 
-        /* Animación al hacer scroll */
-        .scroll-anim {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s ease-out;
-        }
-        .scroll-anim.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Parallax */
-        .parallax {
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-            padding: 120px 0;
-        }
-
-        /* Galería */
+        /* GALERÍA */
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 20px;
             padding: 40px;
+            width: 90%;
+            margin: auto;
         }
         .gallery img {
             width: 100%;
             border-radius: 12px;
             cursor: pointer;
-            transition: transform .3s ease;
+            transition: transform 0.3s ease;
         }
         .gallery img:hover {
             transform: scale(1.05);
         }
 
-        /* Lightbox */
+        /* LIGHTBOX */
         #lightbox {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(6px);
             display: none;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            backdrop-filter: blur(8px);
             z-index: 9999;
         }
         #lightbox img {
             max-width: 90%;
             max-height: 90%;
-            border-radius: 14px;
+            border-radius: 12px;
         }
 
-        /* Mapa estilo elegante */
-        .map-container {
+        /* PARALLAX */
+        .parallax {
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            height: 280px;
+        }
+
+        /* SCROLL ANIMATION */
+        .scroll {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 1s ease-out;
+        }
+        .scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* MAPA */
+        .map-box {
             max-width: 90%;
-            margin: 0 auto;
+            margin: auto;
             background: #111;
             padding: 20px;
             border-radius: 20px;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.15);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.15);
         }
         iframe {
             border-radius: 15px;
+            width: 100%;
+            height: 450px;
+            border: 0;
         }
 
         footer {
             text-align: center;
-            padding: 30px;
+            padding: 25px;
             color: #777;
+            font-size: 14px;
+            margin-top: 40px;
         }
     </style>
 </head>
@@ -117,71 +126,80 @@
         <h1>BRAYAN VERA TATUADOR</h1>
         <p>WHATSAPP: <a href="tel:+19096385317" style="color:#d4af37;">+1 (909) 638-5317</a></p>
         <p>INSTAGRAM: <a href="https://www.instagram.com/brayanvera_tatuador" target="_blank" style="color:#d4af37;">@BRAYANVERA_TATUADOR</a></p>
-        <p>DIRECCIÓN: 26030 Base Line St San Bernardino ZIP 92410</p>
+        <p>DIRECCIÓN: 26030 Base Line St · San Bernardino · ZIP 92410</p>
     </header>
 
-    <!-- PARALLAX 1 -->
-    <div class="parallax" style="background-image: url('banner1.jpg');"></div>
+    <!-- PARALLAX -->
+    <div class="parallax" style="background-image:url('banner1.jpg');"></div>
 
     <!-- GALERÍA -->
-    <h2 class="scroll-anim">GALERÍA DE TRABAJOS</h2>
+    <h2 class="scroll">GALERÍA DE TRABAJOS</h2>
 
-    <div class="gallery scroll-anim">
-        <img loading="lazy" src="img1.jpg">
-        <img loading="lazy" src="img2.jpg">
-        <img loading="lazy" src="img3.jpg">
-        <img loading="lazy" src="img4.jpg">
-        <img loading="lazy" src="img5.jpg">
-        <img loading="lazy" src="img6.jpg">
+    <div class="gallery scroll">
+        <img loading="lazy" src="2.jpeg">
+        <img loading="lazy" src="3.jpeg">
+        <img loading="lazy" src="4.jpeg">
+        <img loading="lazy" src="5.jpeg">
+        <img loading="lazy" src="6.jpeg">
+        <img loading="lazy" src="7.jpeg">
+        <img loading="lazy" src="8.jpeg">
+        <img loading="lazy" src="9.jpeg">
+        <img loading="lazy" src="10.jpeg">
+        <img loading="lazy" src="11.jpeg">
+        <img loading="lazy" src="12.jpeg">
+        <img loading="lazy" src="13.jpeg">
+        <img loading="lazy" src="14.jpeg">
+        <img loading="lazy" src="15.jpeg">
+        <img loading="lazy" src="16.jpeg">
+        <img loading="lazy" src="17.jpeg">
+        <img loading="lazy" src="18.jpeg">
+        <img loading="lazy" src="19.jpeg">
+        <img loading="lazy" src="20.jpeg">
     </div>
 
     <!-- LIGHTBOX -->
-    <div id="lightbox"><img id="lightbox-img"></div>
+    <div id="lightbox"><img id="light-img"></div>
 
-    <!-- PARALLAX 2 -->
-    <div class="parallax" style="background-image: url('banner2.jpg');"></div>
+    <!-- PARALLAX -->
+    <div class="parallax" style="background-image:url('banner2.jpg');"></div>
 
     <!-- MAPA -->
-    <h2 class="scroll-anim">UBICACIÓN EN GOOGLE MAPS</h2>
-    <div class="map-container scroll-anim">
-        <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3302.943847009745!2d-117.23881207354816!3d34.12218726403259!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c354c444798ccf%3A0x738eb80664e269a4!2s26030%20E%20Baseline%20St%2C%20San%20Bernardino%2C%20CA%2092410%2C%20EE.%20UU.!5e0!3m2!1ses-419!2sco!4v1770346638464!5m2!1ses-419!2sco"
-            width="100%" height="450" loading="lazy" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
+    <h2 class="scroll">UBICACIÓN EN GOOGLE MAPS</h2>
+
+    <div class="map-box scroll">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3302.943847009745!2d-117.23881207354816!3d34.12218726403259!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c354c444798ccf%3A0x738eb80664e269a4!2s26030%20E%20Baseline%20St%2C%20San%20Bernardino%2C%20CA%2092410%2C%20EE.%20UU.!5e0!3m2!1ses-419!2sco!4v1770346638464!5m2!1ses-419!2sco" allowfullscreen="" loading="lazy"></iframe>
     </div>
 
     <footer>
-        © 2026 BRAYAN VERA – Todos los derechos reservados
+        © 2026 BRAYAN VERA — Todos los derechos reservados
     </footer>
 
     <script>
-        /* Scroll animation */
-        const animElements = document.querySelectorAll('.scroll-anim');
-        const observer = new IntersectionObserver(entries => {
+        /* SCROLL ANIMATION */
+        const scrollElements = document.querySelectorAll('.scroll');
+
+        const scrollObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
+                if (entry.isIntersecting) entry.target.classList.add("visible");
             });
         }, { threshold: 0.2 });
 
-        animElements.forEach(el => observer.observe(el));
+        scrollElements.forEach(el => scrollObserver.observe(el));
 
-        /* Lightbox */
-        const lightbox = document.getElementById('lightbox');
-        const lightImg = document.getElementById('lightbox-img');
+        /* LIGHTBOX */
+        const lb = document.getElementById("lightbox");
+        const lbImg = document.getElementById("light-img");
 
-        document.querySelectorAll('.gallery img').forEach(img => {
-            img.addEventListener('click', () => {
-                lightImg.src = img.src;
-                lightbox.style.display = 'flex';
-            });
+        document.querySelectorAll(".gallery img").forEach(img => {
+            img.onclick = () => {
+                lbImg.src = img.src;
+                lb.style.display = "flex";
+            };
         });
 
-        lightbox.addEventListener('click', () => {
-            lightbox.style.display = 'none';
-        });
+        lb.onclick = () => lb.style.display = "none";
     </script>
 
 </body>
 </html>
-
 
