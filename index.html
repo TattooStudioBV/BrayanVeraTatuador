@@ -1,333 +1,187 @@
-<!-- Código actualizado con mejoras solicitadas -->
-<!-- Incluye: animaciones scroll, lazy loading, parallax, header animado, favicon ch.png -->
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Brayan Vera - Tatuador</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brayan Vera - Tatuador</title>
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="ch.png">
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="ch.png">
 
-  <!-- Fuente Cinzel -->
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background-color: #111;
+            color: #d4af37;
+            font-family: 'Cinzel', serif;
+            overflow-x: hidden;
+        }
 
-  <style>
-    :root {
-      --gold: #d4af37;
-      --black: #0a0a0a;
-      --industrial-gray: #1f1f1f;
-      --dark-gray: #2b2b2b;
-      --light-gray: #b3b3b3;
-    }
+        /* Header animado */
+        header {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(180deg, #000, #1a1a1a);
+            animation: fadeDown 1.3s ease-out;
+        }
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
 
-    body {
-      margin: 0;
-      font-family: 'Cinzel', serif;
-      background: var(--black);
-      color: var(--light-gray);
-      overflow-x: hidden;
-    }
+        h1, h2 {
+            font-family: 'Cinzel', serif;
+            text-align: center;
+            letter-spacing: 2px;
+        }
 
-    /* HEADER ANIMADO */
-    header {
-      background: linear-gradient(90deg, var(--black), var(--industrial-gray));
-      padding: 20px 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-      transition: background 0.3s ease, padding 0.3s ease;
-      backdrop-filter: blur(10px);
-    }
+        /* Animación al hacer scroll */
+        .scroll-anim {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+        .scroll-anim.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-    header.scrolled {
-      background: rgba(0,0,0,0.85);
-      padding: 10px 40px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.5);
-    }
+        /* Parallax */
+        .parallax {
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            padding: 120px 0;
+        }
 
-    header h1 {
-      color: var(--gold);
-      font-size: 3rem;
-      letter-spacing: 4px;
-      transition: font-size 0.3s ease;
-    }
+        /* Galería */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 40px;
+        }
+        .gallery img {
+            width: 100%;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform .3s ease;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
 
-    header.scrolled h1 {
-      font-size: 2rem;
-    }
+        /* Lightbox */
+        #lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+        }
+        #lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 14px;
+        }
 
-    /* HERO CON PARALLAX */
-    .hero {
-      height: 100vh;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      perspective: 1px;
-    }
+        /* Mapa estilo elegante */
+        .map-container {
+            max-width: 90%;
+            margin: 0 auto;
+            background: #111;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.15);
+        }
+        iframe {
+            border-radius: 15px;
+        }
 
-    .hero video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transform: translateZ(-2px) scale(3);
-    }
-
-    .hero-overlay {
-      position: absolute; top:0; left:0;
-      width:100%; height:100%;
-      background: rgba(0,0,0,0.55);
-      backdrop-filter: blur(3px);
-    }
-
-    .hero img {
-      position: relative;
-      width: 280px;
-      z-index: 3;
-      filter: drop-shadow(0 0 12px rgba(212,175,55,0.5));
-      animation: fadeUp 2s ease-in-out;
-    }
-
-    @keyframes fadeUp {
-      0% {opacity:0; transform: translateY(40px);} 
-      100% {opacity:1; transform: translateY(0);} 
-    }
-
-    /* GALERÍA */
-    .galeria {
-      padding: 120px 40px;
-      background: var(--industrial-gray);
-    }
-
-    .galeria h2 {
-      color: var(--gold);
-      text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 40px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 25px;
-    }
-
-    .grid-item {
-      position: relative;
-      overflow: hidden;
-      border-radius: 14px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.6);
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s, transform 0.8s;
-    }
-
-    .grid-item.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .grid-item img {
-      width: 100%;
-      height: 320px;
-      object-fit: cover;
-      transition: 0.5s;
-      filter: grayscale(50%) contrast(0.8);
-    }
-
-    .grid-item:hover img {
-      transform: scale(1.08);
-      filter: grayscale(0%);
-    }
-
-    /* CONTACTO */
-    .contacto {
-      padding: 100px 40px;
-      background: var(--black);
-      text-align: center;
-    }
-
-    .contacto h2 {
-      color: var(--gold);
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-    }
-
-    /* MAPA */
-    .mapa {
-      padding: 60px 20px;
-      background: var(--industrial-gray);
-      text-align: center;
-    }
-
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: var(--dark-gray);
-      color: var(--light-gray);
-      font-size: 0.9rem;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      header h1 {font-size: 2rem;}
-      .hero img {width: 200px;}
-      .grid {grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));}
-      .grid-item img {height: 220px;}
-    }
-
-    @media (max-width: 480px) {
-      .grid {grid-template-columns: 1fr 1fr;}
-      .grid-item img {height: 180px;}
-    }
-  </style>
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+    </style>
 </head>
+
 <body>
 
-<header>
-  <h1>BRAYAN VERA TATUADOR</h1>
-</header>
+    <!-- HEADER -->
+    <header>
+        <h1>BRAYAN VERA TATUADOR</h1>
+        <p>WHATSAPP: <a href="tel:+19096385317" style="color:#d4af37;">+1 (909) 638-5317</a></p>
+        <p>INSTAGRAM: <a href="https://www.instagram.com/brayanvera_tatuador" target="_blank" style="color:#d4af37;">@BRAYANVERA_TATUADOR</a></p>
+        <p>DIRECCIÓN: 26030 Base Line St San Bernardino ZIP 92410</p>
+    </header>
 
-<section class="hero">
-  <video autoplay muted loop playsinline preload="auto" src="VIDEO.mp4"></video>
-  <div class="hero-overlay"></div>
-  <img src="logo-bv.png" alt="Logo BV">
-</section>
+    <!-- PARALLAX 1 -->
+    <div class="parallax" style="background-image: url('banner1.jpg');"></div>
 
-<section class="galeria" id="galeria">
-  <h2>Mi Galería</h2>
-  <div class="grid">
-    <div class="grid-item"><img src="2.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="3.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="4.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="5.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="6.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="7.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="8.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="9.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="10.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="11.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="12.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="13.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="14.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="15.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="16.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="17.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="19.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="20.jpeg" loading="lazy" alt="Tattoo"></div>
-  </div>
-</section>
+    <!-- GALERÍA -->
+    <h2 class="scroll-anim">GALERÍA DE TRABAJOS</h2>
 
-<section class="contacto" id="contacto">
-  <h2>Contacto</h2>
-  <p>WhatsApp: <a href="https://wa.link/oczbb2" target="_blank" style="color: var(--gold); text-decoration:none;">+1 (909) 638-5317</a></p>
-  <p>Instagram: <a href="https://www.instagram.com/brayanvera_tatuador/" target="_blank" style="color: var(--gold); text-decoration:none;">@brayanvera_tatuador</a></p>
-  <p>Dirección: 26030 Base Line St San Bernardino ZIP 92410</p>
-</section>
+    <div class="gallery scroll-anim">
+        <img loading="lazy" src="img1.jpg">
+        <img loading="lazy" src="img2.jpg">
+        <img loading="lazy" src="img3.jpg">
+        <img loading="lazy" src="img4.jpg">
+        <img loading="lazy" src="img5.jpg">
+        <img loading="lazy" src="img6.jpg">
+    </div>
 
-<section class="mapa">
-  <h2 style="color: var(--gold); font-size:2.2rem; margin-bottom:25px;">Ubicación en Google Maps</h2>
-  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3302.943847009745!2d-117.23881207354816!3d34.12218726403259!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c354c444798ccf%3A0x738eb80664e269a4!2s26030%20E%20Baseline%20St%2C%20San%20Bernardino%2C%20CA%2092410%2C%20EE.%20UU.!5e0!3m2!1ses-419!2sco!4v1770346638464!5m2!1ses-419!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-</section>
+    <!-- LIGHTBOX -->
+    <div id="lightbox"><img id="lightbox-img"></div>
 
-<footer>
-  © 2026 Brayan Vera - Todos los derechos reservados
-</footer>
+    <!-- PARALLAX 2 -->
+    <div class="parallax" style="background-image: url('banner2.jpg');"></div>
 
-<!-- AUDIO -->
-<audio id="bg-music" loop src="musica.mp3"></audio>
+    <!-- MAPA -->
+    <h2 class="scroll-anim">UBICACIÓN EN GOOGLE MAPS</h2>
+    <div class="map-container scroll-anim">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3302.943847009745!2d-117.23881207354816!3d34.12218726403259!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c354c444798ccf%3A0x738eb80664e269a4!2s26030%20E%20Baseline%20St%2C%20San%20Bernardino%2C%20CA%2092410%2C%20EE.%20UU.!5e0!3m2!1ses-419!2sco!4v1770346638464!5m2!1ses-419!2sco"
+            width="100%" height="450" loading="lazy" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
 
-<script>
-  /* HEADER ANIMADO */
-  window.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-    if (window.scrollY > 80) header.classList.add('scrolled');
-    else header.classList.remove('scrolled');
-  });
+    <footer>
+        © 2026 BRAYAN VERA – Todos los derechos reservados
+    </footer>
 
-  /* ANIMACIÓN SUAVE AL HACER SCROLL */
-  /* ANIMACIÓN SUAVE AL HACER SCROLL (FORZADO PARA QUE SIEMPRE CARGUEN) */
-  const items = document.querySelectorAll('.grid-item');
-  items.forEach(i => i.classList.add('visible'));(i));
+    <script>
+        /* Scroll animation */
+        const animElements = document.querySelectorAll('.scroll-anim');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.2 });
 
-  /* FIX DE AUDIO */
-  document.addEventListener('click', () => {
-    const audio = document.getElementById('bg-music');
-    if (audio) audio.play().catch(()=>{});
-  });
-</script>
+        animElements.forEach(el => observer.observe(el));
 
-<script>
-  /* HEADER ANIMADO */
-  window.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-    if (window.scrollY > 80) header.classList.add('scrolled');
-    else header.classList.remove('scrolled');
-  });
+        /* Lightbox */
+        const lightbox = document.getElementById('lightbox');
+        const lightImg = document.getElementById('lightbox-img');
 
-  /* ANIMACIÓN SUAVE AL HACER SCROLL */
-  const items = document.querySelectorAll('.grid-item');
-  items.forEach(i => i.classList.add('visible'));
+        document.querySelectorAll('.gallery img').forEach(img => {
+            img.addEventListener('click', () => {
+                lightImg.src = img.src;
+                lightbox.style.display = 'flex';
+            });
+        });
 
-  /* LIGHTBOX RESTAURADA */
-  const lightbox = document.createElement('div');
-  lightbox.id = 'lightbox';
-  lightbox.style.position = 'fixed';
-  lightbox.style.top = '0';
-  lightbox.style.left = '0';
-  lightbox.style.width = '100%';
-  lightbox.style.height = '100%';
-  lightbox.style.background = 'rgba(0,0,0,0.7)';
-  lightbox.style.display = 'flex';
-  lightbox.style.justifyContent = 'center';
-  lightbox.style.alignItems = 'center';
-  lightbox.style.zIndex = '9999';
-  lightbox.style.backdropFilter = 'blur(8px)';
-  lightbox.style.display = 'none';
-
-  const imgElement = document.createElement('img');
-  imgElement.style.maxWidth = '90%';
-  imgElement.style.maxHeight = '90%';
-  imgElement.style.borderRadius = '14px';
-  imgElement.style.boxShadow = '0 0 25px rgba(0,0,0,0.8)';
-
-  lightbox.appendChild(imgElement);
-  document.body.appendChild(lightbox);
-
-  document.querySelectorAll('.grid-item img').forEach(img => {
-    img.addEventListener('click', () => {
-      imgElement.src = img.src;
-      lightbox.style.display = 'flex';
-    });
-  });
-
-  lightbox.addEventListener('click', (e) => {
-    if (e.target !== imgElement) {
-      lightbox.style.display = 'none';
-    }
-  });
-
-  /* FIX DE AUDIO */
-  document.addEventListener('click', () => {
-    const audio = document.getElementById('bg-music');
-    if (audio) audio.play().catch(()=>{});
-  });
-</script>
+        lightbox.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+    </script>
 
 </body>
 </html>
-
 
 
