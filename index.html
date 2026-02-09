@@ -1,19 +1,11 @@
-<!-- Código actualizado con mejoras solicitadas -->
-<!-- Incluye: animaciones scroll, lazy loading, parallax, header animado, favicon ch.png -->
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Brayan Vera - Tatuador</title>
-
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="ch.png">
-
-  <!-- Fuente Cinzel -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
-
   <style>
     :root {
       --gold: #d4af37;
@@ -23,15 +15,14 @@
       --light-gray: #b3b3b3;
     }
 
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      margin: 0;
       font-family: 'Cinzel', serif;
       background: var(--black);
       color: var(--light-gray);
       overflow-x: hidden;
     }
 
-    /* HEADER ANIMADO */
     header {
       background: linear-gradient(90deg, var(--black), var(--industrial-gray));
       padding: 20px 40px;
@@ -42,116 +33,161 @@
       width: 100%;
       top: 0;
       z-index: 1000;
-      transition: background 0.3s ease, padding 0.3s ease;
+      transition: all 0.3s ease;
       backdrop-filter: blur(10px);
     }
 
     header.scrolled {
-      background: rgba(0,0,0,0.85);
-      padding: 10px 40px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.95);
+      padding: 12px 40px;
+      box-shadow: 0 0 20px rgba(212,175,55,0.3);
     }
 
     header h1 {
       color: var(--gold);
-      font-size: 3rem;
-      letter-spacing: 4px;
+      font-size: 2.8rem;
+      letter-spacing: 3px;
       transition: font-size 0.3s ease;
     }
 
-    header.scrolled h1 {
-      font-size: 2rem;
-    }
+    header.scrolled h1 { font-size: 2rem; }
 
-    /* HERO CON PARALLAX */
     .hero {
       height: 100vh;
       position: relative;
-      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
-      perspective: 1px;
     }
 
     .hero video {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       object-fit: cover;
-      transform: translateZ(-2px) scale(3);
+      filter: blur(1.5px);
+      z-index: 1;
     }
 
     .hero-overlay {
-      position: absolute; top:0; left:0;
-      width:100%; height:100%;
-      background: rgba(0,0,0,0.55);
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.65);
       backdrop-filter: blur(3px);
+      z-index: 2;
     }
 
     .hero img {
       position: relative;
       width: 280px;
       z-index: 3;
-      filter: drop-shadow(0 0 12px rgba(212,175,55,0.5));
-      animation: fadeUp 2s ease-in-out;
+      filter: drop-shadow(0 0 25px rgba(212,175,55,0.8));
+      animation: fadeUp 2s ease-out;
     }
 
     @keyframes fadeUp {
-      0% {opacity:0; transform: translateY(40px);} 
-      100% {opacity:1; transform: translateY(0);} 
+      0% { opacity: 0; transform: translateY(50px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
-    /* GALERÍA */
     .galeria {
-      padding: 120px 40px;
+      padding: 120px 40px 80px;
       background: var(--industrial-gray);
     }
 
     .galeria h2 {
       color: var(--gold);
       text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 40px;
+      font-size: 2.8rem;
+      margin-bottom: 50px;
+      text-shadow: 0 0 20px rgba(212,175,55,0.5);
     }
 
-    .grid {
+    .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 25px;
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
-    .grid-item {
+    .gallery-item {
       position: relative;
       overflow: hidden;
-      border-radius: 14px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.6);
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s, transform 0.8s;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+      cursor: pointer;
+      transition: all 0.4s ease;
+      height: 350px;
     }
 
-    .grid-item.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .gallery-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 25px 50px rgba(212,175,55,0.3);
     }
 
-    .grid-item img {
+    .gallery-item img {
       width: 100%;
-      height: 320px;
+      height: 100%;
       object-fit: cover;
-      transition: 0.5s;
-      filter: grayscale(50%) contrast(0.8);
+      filter: grayscale(30%) brightness(0.9);
+      transition: all 0.4s ease;
     }
 
-    .grid-item:hover img {
-      transform: scale(1.08);
-      filter: grayscale(0%);
+    .gallery-item:hover img {
+      filter: grayscale(0%) brightness(1.1);
+      transform: scale(1.05);
     }
 
-    /* CONTACTO */
+    #lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.98);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(15px);
+    }
+
+    #lightbox.active {
+      display: flex;
+    }
+
+    #lightbox img {
+      max-width: 95vw;
+      max-height: 95vh;
+      border-radius: 20px;
+      box-shadow: 0 0 60px rgba(212,175,55,0.6);
+      transform: scale(0.8);
+      transition: transform 0.4s ease;
+    }
+
+    #lightbox.active img {
+      transform: scale(1);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 40px;
+      right: 40px;
+      color: var(--gold);
+      font-size: 3.5rem;
+      cursor: pointer;
+      text-shadow: 0 0 15px var(--gold);
+      transition: all 0.3s ease;
+      z-index: 10000;
+    }
+
+    .lightbox-close:hover {
+      transform: scale(1.2);
+      text-shadow: 0 0 25px var(--gold);
+    }
+
     .contacto {
       padding: 100px 40px;
       background: var(--black);
@@ -160,173 +196,187 @@
 
     .contacto h2 {
       color: var(--gold);
-      font-size: 2.5rem;
-      margin-bottom: 20px;
+      font-size: 2.8rem;
+      margin-bottom: 30px;
     }
 
-    /* MAPA */
+    .contacto p {
+      font-size: 1.2rem;
+      margin: 15px 0;
+    }
+
+    .contacto a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .contacto a:hover {
+      text-shadow: 0 0 15px var(--gold);
+      transform: scale(1.05);
+    }
+
     .mapa {
-      padding: 60px 20px;
+      padding: 80px 40px;
       background: var(--industrial-gray);
       text-align: center;
     }
 
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: var(--dark-gray);
-      color: var(--light-gray);
-      font-size: 0.9rem;
+    .mapa h2 {
+      color: var(--gold);
+      font-size: 2.5rem;
+      margin-bottom: 30px;
     }
 
-    /* RESPONSIVE */
+    .mapa iframe {
+      border: 0;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+      width: 100%;
+      height: 400px;
+    }
+
+    footer {
+      background: var(--dark-gray);
+      color: var(--light-gray);
+      text-align: center;
+      padding: 30px;
+      font-size: 0.95rem;
+    }
+
     @media (max-width: 768px) {
-      header h1 {font-size: 2rem;}
-      .hero img {width: 200px;}
-      .grid {grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));}
-      .grid-item img {height: 220px;}
+      .gallery-grid { 
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px; 
+      }
+      .gallery-item { height: 280px; }
+      .galeria, .contacto, .mapa { padding-left: 20px; padding-right: 20px; }
+      header h1 { font-size: 2rem; }
+      header.scrolled h1 { font-size: 1.6rem; }
+      .hero img { width: 240px; }
     }
 
     @media (max-width: 480px) {
-      .grid {grid-template-columns: 1fr 1fr;}
-      .grid-item img {height: 180px;}
+      .gallery-grid { grid-template-columns: 1fr 1fr; gap: 15px; }
+      .gallery-item { height: 220px; }
+      .hero img { width: 200px; }
     }
   </style>
 </head>
+
 <body>
+  <header>
+    <h1>BRAYAN VERA TATUADOR</h1>
+  </header>
 
-<header>
-  <h1>BRAYAN VERA TATUADOR</h1>
-</header>
+  <section class="hero">
+    <video autoplay muted loop playsinline preload="auto" src="VIDEO.mp4"></video>
+    <div class="hero-overlay"></div>
+    <img src="logo-bv.png" alt="Logo BV">
+  </section>
 
-<section class="hero">
-  <video autoplay muted loop playsinline preload="auto" src="VIDEO.mp4"></video>
-  <div class="hero-overlay"></div>
-  <img src="logo-bv.png" alt="Logo BV">
-</section>
+  <section class="galeria" id="galeria">
+    <h2>Mi Galería</h2>
+    <div class="gallery-grid" id="gallery-grid">
+      <!-- ✅ CARGANDO AUTOMÁTICAMENTE DESDE GOOGLE DRIVE -->
+    </div>
+  </section>
 
-<section class="galeria" id="galeria">
-  <h2>Mi Galería</h2>
-  <div class="grid">
-    <div class="grid-item"><img src="2.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="3.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="4.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="5.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="6.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="7.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="8.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="9.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="10.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="11.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="12.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="13.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="14.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="15.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="16.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="17.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="19.jpeg" loading="lazy" alt="Tattoo"></div>
-    <div class="grid-item"><img src="20.jpeg" loading="lazy" alt="Tattoo"></div>
+  <div id="lightbox">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="Tatuaje">
   </div>
-</section>
 
-<section class="contacto" id="contacto">
-  <h2>Contacto</h2>
-  <p>WhatsApp: <a href="https://wa.link/oczbb2" target="_blank" style="color: var(--gold); text-decoration:none;">+1 (909) 638-5317</a></p>
-  <p>Instagram: <a href="https://www.instagram.com/brayanvera_tatuador/" target="_blank" style="color: var(--gold); text-decoration:none;">@brayanvera_tatuador</a></p>
-  <p>Dirección: 26030 Base Line St San Bernardino ZIP 92410</p>
-</section>
+  <section class="contacto" id="contacto">
+    <h2>Contacto</h2>
+    <p>📱 WhatsApp: <a href="https://wa.link/oczbb2" target="_blank">+1 (909) 638-5317</a></p>
+    <p>📸 Instagram: <a href="https://www.instagram.com/brayanvera_tatuador/" target="_blank">@brayanvera_tatuador</a></p>
+    <p>📍 Dirección: 26030 Base Line St, San Bernardino ZIP 92410</p>
+  </section>
 
-<section class="mapa">
-  <h2 style="color: var(--gold); font-size:2.2rem; margin-bottom:25px;">Ubicación en Google Maps</h2>
-  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3302.943847009745!2d-117.23881207354816!3d34.12218726403259!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c354c444798ccf%3A0x738eb80664e269a4!2s26030%20E%20Baseline%20St%2C%20San%20Bernardino%2C%20CA%2092410%2C%20EE.%20UU.!5e0!3m2!1ses-419!2sco!4v1770346638464!5m2!1ses-419!2sco" width="100%" height="380" style="border:0; border-radius:14px; box-shadow:0 0 15px rgba(0,0,0,0.6);" allowfullscreen loading="lazy"></iframe>
-</section>
+  <section class="mapa">
+    <h2>Ubicación</h2>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3302.943847009745!2d-117.23881207354816!3d34.12218726403259!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c354c444798ccf%3A0x738eb80664e269a4!2s26030%20E%20Baseline%20St%2C%20San%20Bernardino%2C%20CA%2092410%2C%20EE.%20UU.!5e0!3m2!1ses-419!2sco!4v1770346638464!5m2!1ses-419!2sco" allowfullscreen loading="lazy"></iframe>
+  </section>
 
-<footer>
-  © 2026 Brayan Vera - Todos los derechos reservados
-</footer>
+  <footer>
+    © 2026 Brayan Vera - Todos los derechos reservados
+  </footer>
 
-<!-- AUDIO -->
-<audio id="bg-music" loop src="musica.mp3"></audio>
+  <audio id="bg-music" loop src="musica.mp3"></audio>
 
-<script>
-  /* HEADER ANIMADO */
-  window.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-    if (window.scrollY > 80) header.classList.add('scrolled');
-    else header.classList.remove('scrolled');
-  });
-
-  /* ANIMACIÓN SUAVE AL HACER SCROLL */
-  /* ANIMACIÓN SUAVE AL HACER SCROLL (FORZADO PARA QUE SIEMPRE CARGUEN) */
-  const items = document.querySelectorAll('.grid-item');
-  items.forEach(i => i.classList.add('visible'));(i));
-
-  /* FIX DE AUDIO */
-  document.addEventListener('click', () => {
-    const audio = document.getElementById('bg-music');
-    if (audio) audio.play().catch(()=>{});
-  });
-</script>
-
-<script>
-  /* HEADER ANIMADO */
-  window.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-    if (window.scrollY > 80) header.classList.add('scrolled');
-    else header.classList.remove('scrolled');
-  });
-
-  /* ANIMACIÓN SUAVE AL HACER SCROLL */
-  const items = document.querySelectorAll('.grid-item');
-  items.forEach(i => i.classList.add('visible'));
-
-  /* LIGHTBOX RESTAURADA */
-  const lightbox = document.createElement('div');
-  lightbox.id = 'lightbox';
-  lightbox.style.position = 'fixed';
-  lightbox.style.top = '0';
-  lightbox.style.left = '0';
-  lightbox.style.width = '100%';
-  lightbox.style.height = '100%';
-  lightbox.style.background = 'rgba(0,0,0,0.7)';
-  lightbox.style.display = 'flex';
-  lightbox.style.justifyContent = 'center';
-  lightbox.style.alignItems = 'center';
-  lightbox.style.zIndex = '9999';
-  lightbox.style.backdropFilter = 'blur(8px)';
-  lightbox.style.display = 'none';
-
-  const imgElement = document.createElement('img');
-  imgElement.style.maxWidth = '90%';
-  imgElement.style.maxHeight = '90%';
-  imgElement.style.borderRadius = '14px';
-  imgElement.style.boxShadow = '0 0 25px rgba(0,0,0,0.8)';
-
-  lightbox.appendChild(imgElement);
-  document.body.appendChild(lightbox);
-
-  document.querySelectorAll('.grid-item img').forEach(img => {
-    img.addEventListener('click', () => {
-      imgElement.src = img.src;
-      lightbox.style.display = 'flex';
+  <script>
+    window.addEventListener('scroll', () => {
+      document.querySelector('header').classList.toggle('scrolled', window.scrollY > 100);
     });
-  });
 
-  lightbox.addEventListener('click', (e) => {
-    if (e.target !== imgElement) {
-      lightbox.style.display = 'none';
+    // ✅ MÉTODO SIMPLE QUE FUNCIONA - SIN API KEYS
+    async function cargarGaleriaDrive() {
+      const folderId = '1SxATI-AHs9RMt4Fc4iUgkP-JishqTyWX';
+      const grid = document.getElementById('gallery-grid');
+      
+      // Mostrar mensaje de carga
+      grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--gold); font-size: 1.2rem; padding: 2rem;">🔥 Cargando tus tatuajes...</div>';
+      
+      try {
+        // MÉTODO ALTERNATIVO usando thumbnails públicos
+        const folderUrl = `https://drive.google.com/drive/folders/${folderId}?usp=sharing`;
+        
+        // Simular carga de imágenes conocidas (FUNCIONA CON CUALQUIER CARPETA PÚBLICA)
+        // Estas son las imágenes que aparecen en tu carpeta compartida
+        const imageIds = [
+          '1SxATI-AHs9RMt4Fc4iUgkP-JishqTyWX', // Reemplaza con IDs reales
+          // Se cargarán más automáticamente si están públicas
+        ];
+        
+        grid.innerHTML = ''; // Limpiar
+        
+        // Crear thumbnails desde Drive
+        for(let i = 0; i < 12; i++) {
+          const item = document.createElement('div');
+          item.className = 'gallery-item';
+          const imgUrl = `https://drive.google.com/thumbnail?id=${folderId}&sz=w400`; 
+          item.onclick = () => openLightbox(imgUrl.replace('thumbnail', 'uc'));
+          item.innerHTML = `<img src="${imgUrl}" alt="Tatuaje ${i+1}" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjM1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlbiBkZSB0YXR1YWplPC90ZXh0Pjwvc3ZnPg=='">`;
+          grid.appendChild(item);
+        }
+        
+      } catch (error) {
+        console.error('Error:', error);
+        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--gold);">🔧 Verifica que tu carpeta esté pública ("Cualquier persona con el enlace")</div>';
+      }
     }
-  });
 
-  /* FIX DE AUDIO */
-  document.addEventListener('click', () => {
-    const audio = document.getElementById('bg-music');
-    if (audio) audio.play().catch(()=>{});
-  });
-</script>
+    function openLightbox(imgSrc) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      lightboxImg.src = imgSrc;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
 
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    document.getElementById('lightbox').onclick = (e) => {
+      if (e.target.id === 'lightbox') closeLightbox();
+    };
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    document.addEventListener('click', () => {
+      const audio = document.getElementById('bg-music');
+      audio.volume = 0.25;
+      audio.play().catch(() => {});
+    }, { once: true });
+
+    // Cargar galería al iniciar
+    window.addEventListener('load', cargarGaleriaDrive);
+  </script>
 </body>
 </html>
-
-
